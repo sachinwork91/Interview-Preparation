@@ -13,7 +13,8 @@ import java.io.*;
  *  priority queue to act as min heap)
  * 
  * 
- * 
+ * Complexity of the algorithm is O(nlogn) . 
+ * n for the number of the characters and logn for calling the heapfy which is done by priorityqueues
  * 
  * */
 public class HuffmanCoding1{
