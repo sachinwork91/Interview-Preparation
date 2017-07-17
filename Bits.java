@@ -88,6 +88,13 @@ public class Bits {
 	
 	int[] miss={1,2,5,3};
 	bits.findMissingTwo(miss, 6);
+	
+	bits.rev(10);
+	
+	
+	int[] findone={1,3,3,3,2,1,1};
+	//Find one
+	bits.findone(findone);
 	}
 	
 	
@@ -353,7 +360,7 @@ public class Bits {
 		}
 		System.out.println("Total Number of Set Bits in "+x+" are: "+sum);
 		
-		return 1;
+		return sum;
 	}
 	
 	
@@ -415,6 +422,74 @@ public class Bits {
 	
 	
 	
+	
+	//
+	public void rev(int num){
+		int rev=0;
+		int count=32;
+		System.out.println("Reversing the Bits of Number: "+num);
+		System.out.println("Orginal Bits =>"+Integer.toBinaryString(num));
+		while(num!=0){
+			
+			int temp=1;
+			temp=num&temp;
+			
+			rev=rev|temp;
+			rev=rev<<1;	
+			num=num>>1;
+			count--;
+		}
+		System.out.println("In"+Integer.toBinaryString(rev));
+		rev=rev<<count-1;
+		
+		System.out.println("Reversed Bits =>"+Integer.toBinaryString(rev));
+	}
+	
+	
+	
+	
+	
+	
+	void findone(int[] arr) {
+		System.out.println("Here");
+		int[] bitarr = new int[32];
+
+		for (int i = 0; i < arr.length; i++) {
+
+			int num = arr[i];
+			int pos = 31;
+			while (num != 0) {
+
+				if ((num & 1) == 1) {
+					System.out.println("....");
+					bitarr[pos]++;
+
+				}
+				pos--;
+				num = num >> 1;
+			}
+
+		}
+		System.out.println("next");
+		for (int i = 0; i < bitarr.length; i++) {
+			bitarr[i] = bitarr[i] % 3;
+		}
+
+		for (int i = 0; i < bitarr.length; i++) {
+			System.out.print(bitarr[i] + " ");
+		}
+
+		int res = 0;
+
+		System.out.println();
+
+		for (int i = 31, j = 0; i >= 0; i--, j++) {
+			res += (int) (bitarr[i] * Math.pow(2, j));
+		}
+
+		System.out.println("res => " + Integer.toBinaryString(res));
+		System.out.println("Missing Number is => " + res);
+	}
 	
 	int missing(int a[],int num){
 		
