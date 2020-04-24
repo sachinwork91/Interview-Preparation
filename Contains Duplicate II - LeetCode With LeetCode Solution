@@ -1,0 +1,16 @@
+// Create a sliding window as we only care about last k elements. If you had use HashMap, it would have taken up a lot of space.
+// Create a Set for sliding window and if you find the element in the set. it means the element is in the range of k. 
+// If element is not find just add the current element in the set. Notice this might increase the size of the set, so delete the element 
+// from the set. The element which you need to delete should be the farthest one which can be obtained by nums[i-k]
+
+public boolean containsNearbyDuplicate(int[] nums, int k) {
+    Set<Integer> set = new HashSet<>();
+    for (int i = 0; i < nums.length; ++i) {
+        if (set.contains(nums[i])) return true;
+        set.add(nums[i]);
+        if (set.size() > k) {
+            set.remove(nums[i - k]);
+        }
+    }
+    return false;
+}
