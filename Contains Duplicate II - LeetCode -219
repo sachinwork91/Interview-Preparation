@@ -1,0 +1,28 @@
+// Given an array of integers and an integer k,
+// find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and
+// the absolute difference between i and j is at most k.
+
+// Thoughts , traverse the array and keep the index in the map.
+// Now when you find a same element which existed before, see if it lies in the range of K . 
+// Catch : If the element doesn't lie update the index in the map, as this will be the latest position of the element last seen
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+ 
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        
+        for(int i= 0 ; i< nums.length;i++) {
+            if(map.containsKey(nums[i])) {             
+                int index = map.get(nums[i]);
+                if(i-index<=k) {
+                    return true;
+                } else {
+                    map.put(nums[i],i);
+                }
+            } else {
+                map.put(nums[i], i);
+            }
+        }
+        
+        return false;
+    }
+}
