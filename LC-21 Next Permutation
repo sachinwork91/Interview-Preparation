@@ -1,0 +1,66 @@
+https://leetcode.com/problems/next-permutation/
+
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+
+The replacement must be in-place and use only constant extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+
+// Ans - The answer is inspired from Leetcode solutions, similar question is also available on GeeksForGeeks,
+// but it uses Sorting, where as LeetCode suggests by reversing. So Leet code is better  
+
+// First we need to find the number which is smaller then the previous number.
+// After that start from the end, to find the number which is higher than the number found in previous step. 
+// Now swap the two numbers.
+// Now Reverse part of the array from the number found in step 1 to the end. 
+
+class Solution {
+    public void nextPermutation(int[] nums) {
+        if (nums.length == 1) {
+            return ;
+        }
+        
+        int i = nums.length -2;
+        // Search for the decreasing element
+        while(i>=0 && nums[i]>=nums[i+1]) {
+            i--;
+        }
+        System.out.println(" iiiiii -> "+ i);
+        if(i<0) {
+            System.out.println("Reesult ");
+            reverse(nums, 0, nums.length-1);
+            return;
+        }
+        int j = nums.length-1;
+        // search for the next higher element from end
+        for(; i>=0 && j>i; j--){
+            if(nums[j]>nums[i]) {
+                break;
+            }
+        }
+        // Swap the elements
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+        
+        // Reverse the array from i+1
+        reverse(nums, i+1, nums.length-1);
+    }
+    
+    void reverse(int [] nums, int s , int e) {
+        while(s<e) {
+            int temp = nums[s];
+            nums[s] = nums[e];
+            nums[e] = temp; 
+            s++;
+            e--;
+        }
+    }
+    
+}
