@@ -1,0 +1,33 @@
+Problem - https://leetcode.com/problems/container-with-most-water/ 
+
+//Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai).
+// n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0).
+// Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+
+// Note: You may not slant the container and n is at least 2.
+
+// Start from the extreme edges to find the container with the most Water. Find the min height and mulitply it with the distance
+// which is basically the diff of the indices. Now you have the area with the current containers. Keep traversing by looking for  a greater
+// height container. Until your left < right .
+
+Time- O(n)
+space -O(1)
+
+class Solution {
+    public int maxArea(int[] height) {
+        int l= 0; 
+        int r = height.length-1;
+        int maxArea = 0;
+        
+        while(l<r) {
+        int min = Math.min(height[l], height[r]);
+          maxArea = Math.max(maxArea, min*(r-l));  
+           if(height[l]<height[r]) {
+               l++;
+           } else {
+               r--;
+           }
+        }
+        return maxArea;
+    }
+}
