@@ -1,0 +1,35 @@
+https://leetcode.com/problems/decrypt-string-from-alphabet-to-integer-mapping/
+
+Given a string s formed by digits ('0' - '9') and '#' . We want to map s to English lowercase characters as follows:
+
+Characters ('a' to 'i') are represented by ('1' to '9') respectively.
+Characters ('j' to 'z') are represented by ('10#' to '26#') respectively. 
+Return the string formed after mapping.
+
+It's guaranteed that a unique mapping will always exist.
+
+
+
+
+class Solution {
+    public String freqAlphabets(String s) {
+
+        StringBuffer sb = new StringBuffer();
+    for(int i=0; i<s.length();) {
+        
+        if( (i+2)<s.length() && s.charAt(i+2)=='#') {
+            int t = Integer.parseInt(s.substring(i, i+2));
+            sb.append((char)('a'+ t-1));
+            i = i+3;    
+        } else {
+            int t = Integer.parseInt(s.substring(i, i+1)); // get the current string
+            sb.append((char)('a'+ t-1));
+            i++;
+        }
+        
+    }
+        
+        
+    return sb.toString();
+    }
+}
