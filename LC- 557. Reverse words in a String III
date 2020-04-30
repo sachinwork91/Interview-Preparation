@@ -1,0 +1,76 @@
+https://leetcode.com/problems/reverse-words-in-a-string-iii/solution/
+
+Given a string, you need to reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+Example 1:
+Input: "Let's take LeetCode contest"
+Output: "s'teL ekat edoCteeL tsetnoc"
+Note: In the string, each word is separated by single space and there will not be any extra space in the string.
+
+
+public class Solution {
+    public String reverseWords(String s) {
+        String words[] = split(s);
+        StringBuilder res=new StringBuilder();
+        for (String word: words)
+            res.append(reverse(word) + " ");
+        return res.toString().trim();
+    }
+    public String[] split(String s) {
+        ArrayList < String > words = new ArrayList < > ();
+        StringBuilder word = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') {
+                words.add(word.toString());
+                word = new StringBuilder();
+            } else
+                word.append( s.charAt(i));
+        }
+        words.add(word.toString());
+        return words.toArray(new String[words.size()]);
+    }
+    public String reverse(String s) {
+      StringBuilder res=new StringBuilder();
+        for (int i = 0; i < s.length(); i++)
+            res.insert(0,s.charAt(i));
+        return res.toString();
+    }
+}
+
+
+
+
+/// with using own written split
+class Solution {
+    public String reverseWords(String s) {
+    
+     StringBuilder sb = new StringBuilder();
+     String[] str = s.split("\\s");
+     
+      for(String s_temp: str ) {
+          char[] ch = s_temp.toCharArray();
+          reverse(ch,0, s_temp.length()-1) ;
+          sb.append(ch);
+          sb.append(" ");    
+      }  
+        
+       return sb.toString().trim();  
+    }
+    
+    
+    void swap(char[] ch, int i, int j) {
+        char temp = ch[i];
+        ch[i] = ch[j];
+        ch[j] = temp;
+    }
+    
+    void reverse(char[] ch, int i, int j) {
+        while(i<j) {
+            swap(ch, i , j) ;
+            i++;
+            j--;
+        }
+        
+    }
+    
+}
