@@ -1,0 +1,155 @@
+Approach #1 Brute Force [Time Limit Exceeded]
+Firstly, we know that in order to make all the elements equal to each other with minimum moves, 
+we need to do the increments in all but the maximum element of the array. 
+Thus, in the brute force approach, we scan the complete array to find the maximum and the minimum element.
+After this, we add 1 to all the elements except the maximum element, and increment the count for the number of moves done.
+Again, we repeat the same process, and this continues until the maximum and the minimum element become equal to each other.
+
+
+public class Solution {
+    public int minMoves(int[] nums) {
+        int min = 0, max = nums.length - 1, count = 0;
+        while (true) {
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[max] < nums[i]) {
+                    max = i;
+                }
+                if (nums[min] > nums[i]) {
+                    min = i;
+                }
+            }
+            if (nums[max] == nums[min]) {
+                break;
+            }
+            for (int i = 0; i < nums.length; i++) {
+                if (i != max) {
+                    nums[i]++;
+                }
+            }
+            count++;
+        }
+        return count;
+    }
+}
+
+Complexity Analysis
+
+Time complexity : O(n^2 k)O(n 
+2
+ k), where nn is the length of the array and kk is the difference between maximum element and minimum element.
+Space complexity : O(1)O(1). No extra space required.
+
+
+----------------------------------------------------------------------
+
+Approach #2 Better Brute Force[Time Limit Exceeded]
+Algorithm
+
+In the previous approach, we added 1 to every element in a single step.
+But, we can modify this approach to some extent. 
+In order to make the minimum element equal to the maximum element, we need to add 1 atleast kk times, after which,
+the maximum element could change. Thus, instead of incrementing in steps of 1,we increment in bursts, where each burst 
+will be of size k=max-mink=max−min. Thus, we scan the complete array to find the maximum and minimum element. 
+Then, we increment every element by kk units and add kk to the count of moves. Again we repeat the same process,
+until the maximum and minimum element become equal.
+
+public class Solution {
+    public int minMoves(int[] nums) {
+        int min = 0, max = nums.length - 1, count = 0;
+        while (true) {
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[max] < nums[i]) {
+                    max = i;
+                }
+                if (nums[min] > nums[i]) {
+                    min = i;
+                }
+            }
+            int diff = nums[max] - nums[min];
+            if (diff == 0) {
+                break;
+            }
+            count += diff;
+            for (int i = 0; i < nums.length; i++) {
+                if (i != max) {
+                    nums[i] = nums[i] + diff;
+                }
+            }
+        }
+        return count;
+    }
+}
+
+Complexity Analysis
+
+Time complexity : O(n^2)O(n 
+2
+ ). In every iteration two elements are equalized.
+Space complexity : O(1)O(1). No extra space required
+
+-------------------------------------------------------------------------------------------------
+
+
+
+Approach #3 Using Sorting [Accepted]
+Algorithm
+
+The problem gets simplified if we sort the given array in order to obtain a sorted array aa.
+Now, similar to Approach 2,we use the difference diff=max-mindiff=max−min to update the elements of the array, 
+but we need not traverse the whole array to find the maximum and minimum element every time, since if the array is sorted,
+we can make use of this property to find the maximum and minimum element after updation in O(1)O(1) time. Further,
+we need not actually update all the elements of the array. To understand how this works, we'll go in a stepwise manner.
+
+Firstly, assume that we are updating the elements of the sorted array after every step of calculating the difference
+diffdiff. We'll see how to find the maximum and minimum element without traversing the array.
+In the first step, the last element is the largest element. Therefore, diff=a[n-1]-a[0]diff=a[n−1]−a[0].
+We add diffdiff to all the elements except the last one i.e. a[n-1]a[n−1]. Now, the updated element at index 0 ,a'[0]a 
+′
+ [0] will be a[0]+diff=a[n-1]a[0]+diff=a[n−1]. Thus, the smallest element a'[0]a 
+′
+ [0] is now equal to the previous largest element a[n-1]a[n−1]. Since, the elements of the array are sorted, 
+ the elements upto index i-2i−2 satisfy the property a[j]>=a[j-1]a[j]>=a[j−1]. Thus, after updation, the element a'[n-2]a 
+′
+ [n−2] will become the largest element, which is obvious due to the sorted array property. Also, a[0] is still the smallest
+ element.
+
+Thus, for the second updation, we consider the difference diffdiff as diff=a[n-2]-a[0]diff=a[n−2]−a[0]. After updation, a''[0]a 
+′′
+ [0] will become equal to a'[n-2]a 
+′
+ [n−2] similar to the first iteration. Further, since a'[0]a 
+′
+ [0] and a'[n-1]a 
+′
+ [n−1] were equal. After the second updation, we get a''[0]=a''[n-1]=a'[n-2]a 
+′′
+ [0]=a 
+′′
+ [n−1]=a 
+′
+ [n−2]. Thus, now the largest element will be a[n-3]a[n−3]. Thus, we can continue in this fashion, and keep on incrementing the number of moves with the difference found at every step.
+
+Now, let's come to step 2. In the first step, we assumed that we are updating the elements of the array aa at every step, but we need not do this. This is because, even after updating the elements the difference which we consider to add to the number of moves required remains the same because both the elements maxmax and minmin required to find the diffdiff get updated by the same amount everytime.
+
+Thus, we can simply sort the given array once and use moves=\sum_{i=1}^{n-1} (a[i]-a[0])moves=∑ 
+i=1
+n−1
+
+
+public class Solution {
+    public int minMoves(int[] nums) {
+        Arrays.sort(nums);
+        int count = 0;
+        for (int i = nums.length - 1; i > 0; i--) {
+            count += nums[i] - nums[0];
+        }
+        return count;
+    }
+}
+
+
+
+
+
+
+
