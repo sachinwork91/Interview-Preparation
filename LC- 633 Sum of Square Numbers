@@ -1,0 +1,69 @@
+
+
+
+When we use two pointers, the most important thing we should do is to find the left & right boundaries.
+In this case, obviously, left pointer should be zero at the very beginning, right?
+And what about the right pointer?
+
+IT SHOULD BE AT Sqrt(n)
+since a^2 + b^2 == c.   ->>>>>>>>>>>>>>>>> This is by Binary Search <<<<<<<<<<<<<<<<<<<<<<-----------
+https://leetcode.com/problems/sum-of-square-numbers/discuss/554079/Java-Two-Pointers-w-explanation
+Code
+
+class Solution {
+    public boolean judgeSquareSum(int c) {
+        // Two pointers
+        int left = 0;
+        int right = (int) Math.sqrt(c);
+        while (left <= right) {
+            int result = left * left + right * right;
+            if (result == c) {
+                return true;
+            } else if (result < c) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return false;
+    }
+}
+
+    Time -> (root(c)Log(c))
+    Space -> 
+--------------------------------------------------------------------------
+
+Approach - 2 
+
+
+public boolean judgeSquareSum(int c) {
+        long l = 0, r = (long) Math.sqrt(c);
+        while(l <= r){   // this <= other than <
+            long sum = l * l + r * r;
+            if (sum == c) return true;
+            if (sum < c) l++;
+            else r--;
+        }
+        return false;
+    }
+-----------------------------------------------------------------------------
+
+Approach - 3 
+
+public class Solution {
+    public boolean judgeSquareSum(int c) {
+        for (long a = 0; a <= Math.sqrt(c); a++) {
+            double b = Math.sqrt(c - a * a);             
+            if (b == (int) b)                   // Check if the remaining num is a perfect square. Notice we used Double to 
+              return true;                    // the result and checking again with casting it to int 
+        }
+        return false;
+    }
+}
+    Time -> (root(c)Log(c))
+    Space -> O(1)
+    
+    
+    
+    
+
