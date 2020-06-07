@@ -1,0 +1,152 @@
+import java.util.Stack;
+
+
+/*
+* This just show inOrder and PreOrder Iterative travesals over Binary Search Tree. would be same for Binary Tree.
+* refer to the methods  
+* [iterativeInOrder] -> Iterative In Order traversal
+* [iterativePreorder] -> Iterative Pre Order traversal 
+*/
+
+public class BST {
+
+    Node root;
+
+    class Node{
+        int val;
+        Node left;
+        Node right;
+
+        Node(int val){
+            this.val = val;
+        }
+    }
+
+    public BST() {
+       root = null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Hello");
+        BST tree = new BST();
+        tree.insertNode(5);
+        tree.insertNode(7);
+        tree.insertNode(2);
+        tree.insertNode(1);
+//        System.out.println(tree.search(5));
+//        tree.print();
+        System.out.println("Iterative PrOrder ----");
+        tree.iterativePreorder();
+        System.out.println("Iterative InOrder ----");
+        tree.iterativeInOrder();
+    }
+
+    void print(){
+        inOrder(root);
+    }
+
+    void inOrder(Node node) {
+        if(node!=null) {
+            inOrder(node.left);
+            System.out.print(" "+ node.val);
+            inOrder(node.right);
+        }
+    }
+
+
+    void insertNode(int val) {
+
+        root = insertNodeRec(root, val);
+    }
+
+    Node insertNodeRec(Node root, int val) {
+
+        if (root==null) {
+           // System.out.print(" YOLOOOO   "+ val);
+             root = new Node(val);
+           return root;
+        }
+
+        if(val<root.val) {
+            root.left = insertNodeRec(root.left, val);
+        } else {
+            root.right = insertNodeRec(root.right, val);
+        }
+
+        return root;
+    }
+
+    boolean search(int val) {
+        return searchInTree(root, val);
+    }
+
+    boolean searchInTree(Node node, int val) {
+        if(node==null) {
+            return false;
+        }
+        if(node.val==val) {
+            return true;
+        }
+        if(val<node.val){
+            return searchInTree(node.left, val);
+        } else {
+            return searchInTree(node.right, val);
+        }
+
+    }
+
+
+    void iterativePreorder() {
+
+        if(root==null) return;
+
+        Stack<Node> stack = new Stack<Node>();
+
+        Node curr = root;
+
+
+        while(curr!=null || stack.size() >0) {
+
+            while(curr!=null) {
+
+                System.out.print(" " + curr.val);
+                stack.push(curr);
+                curr = curr.left;
+            }
+
+            if(!stack.isEmpty()) {
+                Node temp = stack.pop();
+                curr = temp.right;
+            }
+
+        }
+    }
+
+    void iterativeInOrder() {
+
+        if(root==null) return;
+
+        Stack<Node> stack = new Stack<Node>();
+
+        Node curr = root;
+
+
+        while(curr!=null || stack.size() >0) {
+
+            while(curr!=null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+
+            if(!stack.isEmpty()) {
+                Node temp = stack.pop();
+                System.out.print(" " + temp.val);
+
+                curr = temp.right;
+            }
+
+        }
+    }
+
+
+}
